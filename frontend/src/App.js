@@ -2,6 +2,9 @@ import { useState } from 'react';
 import axios from 'axios';
 import Card from './Card';
 import './App.css';
+import { config } from './config'
+
+const API_URL = config.API_URL
 
 function App() {
   const [posts, setPosts] = useState([])
@@ -10,6 +13,7 @@ function App() {
     content: '',
     image: null
   })
+  console.log(API_URL)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,11 +22,11 @@ function App() {
     formData.append('content', form.content)
     formData.append('image', form.image)
 
-    await axios.post('http://localhost:5000/posts', formData, {
+    await axios.post(`${API_URL}/posts`, formData, {
       headers: { 'Content-Type': 'multipart/form-data'}
     })
 
-    const res = await axios.get('http://localhost:5000/posts')
+    const res = await axios.get(`${API_URL}/posts`)
     console.log(res.data)
     setPosts(res.data)
   }

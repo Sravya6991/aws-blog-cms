@@ -1,12 +1,15 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { config } from './config'
+
+const API_URL = config.API_URL
 
 const Card = ({ posts, setPosts }) => {
   const [message, setMessage] = useState("")
 
   const handleDelete = async (id) => {
     try{
-      const resp = await axios.delete(`http://localhost:5000/posts/${id}`)
+      const resp = await axios.delete(`${API_URL}/posts/${id}`)
       console.log(resp.data)
       setMessage(resp.data.message)
       setPosts(post => post.filter(p => p._id !== id))
